@@ -6,9 +6,11 @@ ENV BUILD_PACKAGES schroot autotools-dev binutils-dev debhelper doxygen graphviz
 EXPOSE 8080
 EXPOSE 50000
 
-RUN apt-get install -y wget
+RUN apt-get install -y wget software-properties-common apt-transport-https
 RUN wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
 RUN echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list
+RUN apt-add-repository https://dev.marc.waeckerlin.org/repository
+RUN wget -O- https://dev.marc.waeckerlin.org/repository/PublicKey | apt-key add -
 RUN apt-get update -y
 RUN apt-get install -y jenkins
 RUN sed -i 's,JENKINS_ARGS="[^"]*,& --prefix=$JENKINS_PREFIX,' /etc/default/jenkins
