@@ -2,8 +2,7 @@ FROM ubuntu
 MAINTAINER mwaeckerlin
 
 ENV JENKINS_PREFIX /
-VOLUME /var/lib/jenkins
-VOLUME /var/log/jenkins
+ENV BUILD_PACKAGES schroot autotools-dev binutils-dev debhelper doxygen graphviz libboost-thread-dev libconfuse-dev libcppunit-dev libgnutls-dev libiberty-dev libmysqlclient-dev libp11-kit-dev libpcsclite-dev libpcscxx-dev libpkcs11-helper1-dev libqt4-dev libssl-dev libz-dev lsb-release mrw-c++-dev pkg-config qt4-dev-tools qtbase5-dev qtbase5-dev-tools qttools5-dev quilt zlib1g-dev
 EXPOSE 8080
 EXPOSE 50000
 
@@ -13,7 +12,10 @@ RUN echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/
 RUN apt-get update -y
 RUN apt-get install -y jenkins
 RUN sed -i 's,JENKINS_ARGS="[^"]*,& --prefix=$JENKINS_PREFIX,' /etc/default/jenkins
+RUN apt-get install -y ${BUILD_PACKAGES}
 
+VOLUME /var/lib/jenkins
+VOLUME /var/log/jenkins
 WORKDIR /var/lib/jenkins
-USER jenkins
-CMD bash -c '. /etc/default/jenkins && export JENKINS_HOME && ${JAVA} -jar ${JAVA_ARGS} ${JENKINS_WAR} ${JENKINS_ARGS}'
+
+CMD apt-get install ${BUILD_PACKAGES} && sudo -Hu jenkins bash -c '. /etc/default/jenkins && export JENKINS_HOME && ${JAVA} -jar ${JAVA_ARGS} ${JENKINS_WAR} ${JENKINS_ARGS}'
