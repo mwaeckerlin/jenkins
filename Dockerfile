@@ -20,4 +20,5 @@ VOLUME /var/lib/jenkins
 VOLUME /var/log/jenkins
 WORKDIR /var/lib/jenkins
 
-CMD apt-get install ${BUILD_PACKAGES} && sudo -Hu jenkins bash -c '. /etc/default/jenkins && export JENKINS_HOME && ${JAVA} -jar ${JAVA_ARGS} ${JENKINS_WAR} ${JENKINS_ARGS}'
+CMD apt-get install ${BUILD_PACKAGES} && \
+    sudo -EHu jenkins bash -c '. /etc/default/jenkins && export JENKINS_HOME && ${JAVA} -jar ${JAVA_ARGS} ${JENKINS_WAR} ${JENKINS_ARGS}'
