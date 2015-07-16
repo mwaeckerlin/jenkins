@@ -2,7 +2,7 @@ FROM ubuntu
 MAINTAINER mwaeckerlin
 
 ENV JENKINS_PREFIX /
-ENV BUILD_PACKAGES schroot autotools-dev binutils-dev debhelper doxygen graphviz libboost-thread-dev libconfuse-dev libcppunit-dev libgnutls-dev libiberty-dev libmysqlclient-dev libp11-kit-dev libpcsclite-dev libpcscxx-dev libpkcs11-helper1-dev libqt4-dev libssl-dev libz-dev lsb-release mrw-c++-dev pkg-config qt4-dev-tools qtbase5-dev qtbase5-dev-tools qttools5-dev quilt zlib1g-dev
+ENV BUILD_PACKAGES schroot autotools-dev binutils-dev debhelper doxygen graphviz mscgen libboost-thread-dev libconfuse-dev libcppunit-dev libgnutls-dev libiberty-dev libmysqlclient-dev libp11-kit-dev libpcsclite-dev libpcscxx-dev libpkcs11-helper1-dev libqt4-dev libssl-dev libz-dev lsb-release mrw-c++-dev pkg-config qt4-dev-tools qtbase5-dev qtbase5-dev-tools qttools5-dev quilt zlib1g-dev openssh-client
 EXPOSE 8080
 EXPOSE 50000
 
@@ -20,5 +20,12 @@ VOLUME /var/lib/jenkins
 VOLUME /var/log/jenkins
 WORKDIR /var/lib/jenkins
 
+USER jenkins
+RUN ssh-
+
+USER root
 CMD apt-get install ${BUILD_PACKAGES} && \
+    ( test -f /var/lib/jenkins/.ssh/id_rsa || \
+      sudo -EHu jenkins ssh-keygen -b 4096 -N "" -f /var/lib/jenkins/.ssh/id_rsa ) && \
+    cat /var/lib/jenkins/.ssh/id_rsa.pub && \
     sudo -EHu jenkins bash -c '. /etc/default/jenkins && export JENKINS_HOME && ${JAVA} -jar ${JAVA_ARGS} ${JENKINS_WAR} ${JENKINS_ARGS}'
