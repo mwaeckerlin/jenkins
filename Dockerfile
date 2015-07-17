@@ -2,7 +2,7 @@ FROM ubuntu
 MAINTAINER mwaeckerlin
 
 ENV JENKINS_PREFIX /
-ENV BUILD_PACKAGES schroot autotools-dev binutils-dev debhelper doxygen graphviz mscgen libboost-thread-dev libconfuse-dev libcppunit-dev libgnutls-dev libiberty-dev libmysqlclient-dev libp11-kit-dev libpcsclite-dev libpcscxx-dev libpkcs11-helper1-dev libqt4-dev libssl-dev libz-dev lsb-release mrw-c++-dev pkg-config qt4-dev-tools qtbase5-dev qtbase5-dev-tools qttools5-dev quilt zlib1g-dev openssh-client
+ENV BUILD_PACKAGES schroot autotools-dev binutils-dev debhelper doxygen graphviz mscgen libboost-thread-dev libconfuse-dev libcppunit-dev libgnutls-dev libiberty-dev libmysqlclient-dev libp11-kit-dev libpcsclite-dev libssl-dev libz-dev lsb-release pkg-config qtbase5-dev qtbase5-dev-tools qttools5-dev quilt zlib1g-dev openssh-client mingw-w64 xml2 zip
 EXPOSE 8080
 EXPOSE 50000
 
