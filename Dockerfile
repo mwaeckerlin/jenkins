@@ -2,7 +2,7 @@ FROM ubuntu
 MAINTAINER mwaeckerlin
 
 ENV JENKINS_PREFIX /
-ENV BUILD_PACKAGES schroot autotools-dev binutils-dev debhelper doxygen graphviz mscgen libboost-thread-dev libconfuse-dev libcppunit-dev libgnutls-dev libiberty-dev libmysqlclient-dev libp11-kit-dev libpcsclite-dev libssl-dev libz-dev lsb-release pkg-config qtbase5-dev qtbase5-dev-tools qttools5-dev quilt zlib1g-dev openssh-client mingw-w64 xml2 zip
+ENV BUILD_PACKAGES schroot autotools-dev binutils-dev debhelper doxygen graphviz mscgen libboost-thread-dev libconfuse-dev libcppunit-dev libgnutls-dev libiberty-dev libmysqlclient-dev libp11-kit-dev libpcsclite-dev libssl-dev libz-dev lsb-release pkg-config qtbase5-dev qtbase5-dev-tools qttools5-dev quilt zlib1g-dev openssh-client mingw-w64 xml2 zip curl
 EXPOSE 8080
 EXPOSE 50000
 
@@ -24,7 +24,7 @@ USER jenkins
 RUN ssh-
 
 USER root
-CMD apt-get install ${BUILD_PACKAGES} && \
+CMD apt-get update && apt-get install -y ${BUILD_PACKAGES} && \
     ( test -f /var/lib/jenkins/.ssh/id_rsa || \
       sudo -EHu jenkins ssh-keygen -b 4096 -N "" -f /var/lib/jenkins/.ssh/id_rsa ) && \
     cat /var/lib/jenkins/.ssh/id_rsa.pub && \
