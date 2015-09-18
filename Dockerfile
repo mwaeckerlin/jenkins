@@ -56,7 +56,8 @@ ENV BUILD_PACKAGES \
                     xml2 \
                     zip \
                     zlib1g-dev
-ENV ANDROID_HOME /android-sdk-linux
+ENV ANDROID_HOME /android
+VOLUME /android
 EXPOSE 8080
 EXPOSE 50000
 
@@ -70,14 +71,6 @@ RUN apt-get update -y
 RUN apt-get install -y jenkins
 RUN sed -i 's,JENKINS_ARGS="[^"]*,& --prefix=$JENKINS_PREFIX,' /etc/default/jenkins
 RUN apt-get install -y ${BUILD_PACKAGES}
-
-WORKDIR /tmp
-RUN wget -q $(wget -q -O- 'https://developer.android.com/sdk' | \
-              sed -n 's,.*"\(https\?://.*android-sdk.*linux.*\.tgz\)".*,\1,p')
-WORKDIR /
-RUN tar xzf /tmp/android-sdk*linux*.tgz
-RUN rm /tmp/android-sdk*linux*.tgz
-RUN ( sleep 5 && while [ 1 ]; do sleep 1; echo "y"; done ) | ${ANDROID_HOME}/tools/android update sdk -u
 
 VOLUME /var/lib/jenkins
 VOLUME /var/log/jenkins
