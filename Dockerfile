@@ -81,4 +81,4 @@ CMD apt-get update && apt-get install -y ${BUILD_PACKAGES} && \
     ( test -f /var/lib/jenkins/.ssh/id_rsa || \
       sudo -EHu jenkins ssh-keygen -b 4096 -N "" -f /var/lib/jenkins/.ssh/id_rsa ) && \
     cat /var/lib/jenkins/.ssh/id_rsa.pub && \
-    sudo -EHu jenkins bash -c '. /etc/default/jenkins && export JENKINS_HOME && ${JAVA} -jar ${JAVA_ARGS} ${JENKINS_WAR} ${JENKINS_ARGS}'
+    sudo -EHu jenkins bash -c 'export ANDROID_HOME='"${ANDROID_HOME}"'; . /etc/default/jenkins && export JENKINS_HOME && ${JAVA} -jar ${JAVA_ARGS} ${JENKINS_WAR} ${JENKINS_ARGS}'
