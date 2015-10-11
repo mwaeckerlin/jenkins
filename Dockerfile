@@ -1,6 +1,7 @@
 FROM ubuntu
 MAINTAINER mwaeckerlin
 
+ENV TIMEZONE="Europe/Zurich"
 ENV JENKINS_PREFIX /
 ENV BUILD_PACKAGES \
                     automake \
@@ -28,6 +29,7 @@ ENV BUILD_PACKAGES \
                     libpcsclite-dev \
                     libpcscxx-dev \
                     libpkcs11-helper1-dev \
+                    libproxy-dev \
                     libqt5svg5-dev \
                     libqt5webkit5-dev \
                     libqt5x11extras5-dev \
@@ -53,11 +55,12 @@ ENV BUILD_PACKAGES \
                     schroot \
                     subversion \
                     subversion-tools \
+                    svn2cl \
                     xml2 \
+                    xvfb \
                     zip \
                     zlib1g-dev
 ENV ANDROID_HOME /android
-VOLUME /android
 EXPOSE 8080
 EXPOSE 50000
 
@@ -72,13 +75,15 @@ RUN apt-get install -y jenkins
 RUN sed -i 's,JENKINS_ARGS="[^"]*,& --prefix=$JENKINS_PREFIX,' /etc/default/jenkins
 RUN apt-get install -y ${BUILD_PACKAGES}
 
-VOLUME /var/lib/jenkins
+VOLUME /VOLUME /var/lib/jenkins
 VOLUME /var/log/jenkins
 WORKDIR /var/lib/jenkins
 
 USER root
-CMD apt-get update && apt-get install -y ${BUILD_PACKAGES} && \
+CMD if test -e "${ANDROID_HOME}"; then chown-R jenkins.jenkins "${ANDROID_HOME}"; fi && \
+    echo "${TIMEZONE}" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata && \
+    apt-get update && apt-get upgrade -y && apt-get install -y ${BUILD_PACKAGES} && \
     ( test -f /var/lib/jenkins/.ssh/id_rsa || \
       sudo -EHu jenkins ssh-keygen -b 4096 -N "" -f /var/lib/jenkins/.ssh/id_rsa ) && \
     cat /var/lib/jenkins/.ssh/id_rsa.pub && \
-    sudo -EHu jenkins bash -c 'export ANDROID_HOME='"${ANDROID_HOME}"'; . /etc/default/jenkins && export JENKINS_HOME && ${JAVA} -jar ${JAVA_ARGS} ${JENKINS_WAR} ${JENKINS_ARGS}'
+    sudo -EHu jenkins bash -c 'export TERMINAL=dumb; export ANDROID_HOME='"${ANDROID_HOME}"'; . /etc/default/jenkins && export JENKINS_HOME && ${JAVA} -jar ${JAVA_ARGS} ${JENKINS_WAR} ${JENKINS_ARGS}'
