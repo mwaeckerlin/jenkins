@@ -64,6 +64,7 @@ ENV ANDROID_HOME /android
 EXPOSE 8080
 EXPOSE 50000
 
+RUN apt-get update -y
 RUN apt-get install -y wget software-properties-common apt-transport-https
 RUN wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
 RUN echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list
