@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:wily
 MAINTAINER mwaeckerlin
 
 ENV TIMEZONE="Europe/Zurich"
