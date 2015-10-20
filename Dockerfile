@@ -55,6 +55,7 @@ ENV BUILD_PACKAGES \
                     schroot \
                     subversion \
                     subversion-tools \
+                    sudo \
                     svn2cl \
                     xml2 \
                     xvfb \
@@ -87,4 +88,4 @@ CMD if test -e "${ANDROID_HOME}"; then chown -R jenkins.jenkins "${ANDROID_HOME}
     ( test -f /var/lib/jenkins/.ssh/id_rsa || \
       sudo -EHu jenkins ssh-keygen -b 4096 -N "" -f /var/lib/jenkins/.ssh/id_rsa ) && \
     cat /var/lib/jenkins/.ssh/id_rsa.pub && \
-    sudo -EHu jenkins bash -c 'export TERMINAL=dumb; export ANDROID_HOME='"${ANDROID_HOME}"'; . /etc/default/jenkins && export JENKINS_HOME && ${JAVA} -jar ${JAVA_ARGS} ${JENKINS_WAR} ${JENKINS_ARGS}'
+    sudo -EHu jenkins bash -c 'export TERMINAL=dumb; export ANDROID_HOME="'"${ANDROID_HOME}"'"; . /etc/default/jenkins && export JENKINS_HOME && ${JAVA} -jar ${JAVA_ARGS} ${JENKINS_WAR} ${JENKINS_ARGS}'
