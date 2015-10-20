@@ -81,7 +81,7 @@ VOLUME /var/log/jenkins
 WORKDIR /var/lib/jenkins
 
 USER root
-CMD if test -e "${ANDROID_HOME}"; then chown-R jenkins.jenkins "${ANDROID_HOME}"; fi && \
+CMD if test -e "${ANDROID_HOME}"; then chown -R jenkins.jenkins "${ANDROID_HOME}"; fi && \
     echo "${TIMEZONE}" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata && \
     apt-get update && apt-get upgrade -y && apt-get install -y ${BUILD_PACKAGES} && \
     ( test -f /var/lib/jenkins/.ssh/id_rsa || \
