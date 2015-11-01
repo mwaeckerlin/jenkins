@@ -91,7 +91,7 @@ WORKDIR /var/lib/jenkins
 USER root
 CMD if test -e "${ANDROID_HOME}"; then chown -R jenkins.jenkins "${ANDROID_HOME}"; fi && \
     if test -n "${MAINTAINER_NAME}" -a -n "${MAINTAINER_COMMENT}" -a -n "${MAINTAINER_EMAIL}" \
-            -a ! -d ~/.gnupg ; then \
+            -a ! -d ~jenkins/.gnupg ; then \
       ( echo "Key-Type: RSA"; \
         echo "Key-Length: 4096"; \
         echo "Subkey-Type: RSA"; \
