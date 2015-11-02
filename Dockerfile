@@ -30,6 +30,7 @@ ENV BUILD_PACKAGES \
                     libmysqlclient-dev \
                     libp11-kit-dev \
                     libpcsclite-dev \
+                    libpcscxx-dev \
                     libpkcs11-helper1-dev \
                     libproxy-dev \
                     libqt5svg5-dev \
@@ -38,12 +39,15 @@ ENV BUILD_PACKAGES \
                     libqt5xmlpatterns5-dev \
                     libssl-dev \
                     libtool \
+                    libxml-cxx-dev \
                     libz-dev \
                     lsb-release \
                     mingw-w64 \
+                    mrw-c++-dev \
                     mscgen \
                     openssh-client \
                     pkg-config \
+                    proxyface-dev \
                     qt5-default \
                     qtbase5-dev \
                     qtbase5-dev-tools \
@@ -60,10 +64,6 @@ ENV BUILD_PACKAGES \
                     xvfb \
                     zip \
                     zlib1g-dev
-#                    libpcscxx-dev
-#                    libxml-cxx-dev
-#                    mrw-c++-dev
-#                    proxyface-dev
 ENV ANDROID_HOME /android
 ENV LANG en_US.UTF-8
 EXPOSE 8080
@@ -75,8 +75,8 @@ RUN apt-get update -y
 RUN apt-get install -y wget software-properties-common apt-transport-https
 RUN wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
 RUN echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list
-#RUN apt-add-repository https://dev.marc.waeckerlin.org/repository
-#RUN wget -O- https://dev.marc.waeckerlin.org/repository/PublicKey | apt-key add -
+RUN apt-add-repository https://dev.marc.waeckerlin.org/repository
+RUN wget -O- https://dev.marc.waeckerlin.org/repository/PublicKey | apt-key add -
 RUN apt-add-repository ppa:cordova-ubuntu/ppa
 RUN apt-get update -y
 RUN apt-get upgrade -y
