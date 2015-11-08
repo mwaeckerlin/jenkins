@@ -42,6 +42,8 @@ ENV BUILD_PACKAGES \
                     libxml-cxx-dev \
                     libz-dev \
                     lsb-release \
+                    cgroup-light \
+                    lxc-docker \
                     mingw-w64 \
                     mrw-c++-dev \
                     mscgen \
@@ -75,14 +77,17 @@ RUN apt-get update -y
 RUN apt-get install -y wget software-properties-common apt-transport-https
 RUN wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
 RUN echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list
-RUN apt-add-repository https://dev.marc.waeckerlin.org/repository
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
+RUN echo deb https://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list
 RUN wget -O- https://dev.marc.waeckerlin.org/repository/PublicKey | apt-key add -
+RUN apt-add-repository https://dev.marc.waeckerlin.org/repository
 RUN apt-add-repository ppa:cordova-ubuntu/ppa
 RUN apt-get update -y
 RUN apt-get upgrade -y
 RUN apt-get install -y jenkins
 RUN sed -i 's,JENKINS_ARGS="[^"]*,& --prefix=$JENKINS_PREFIX,' /etc/default/jenkins
 RUN apt-get install -y ${BUILD_PACKAGES}
+RUN adduser jenkins docker
 
 VOLUME /VOLUME /var/lib/jenkins
 VOLUME /var/log/jenkins
@@ -106,6 +111,9 @@ CMD if test -e "${ANDROID_HOME}"; then chown -R jenkins.jenkins "${ANDROID_HOME}
       | sudo -Hu jenkins gpg -v -v --gen-key --batch; \
     fi; \
     echo "${TIMEZONE}" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata && \
+    if which cgroups-mount 1>&2 > /dev/null && which docker 1>&2 > /dev/null; then \
+      cgroups-mount && service docker start; \
+    fi; \
     apt-get install -y ${BUILD_PACKAGES} && \
     ( test -f /var/lib/jenkins/.ssh/id_rsa || \
       sudo -EHu jenkins ssh-keygen -b 4096 -N "" -f /var/lib/jenkins/.ssh/id_rsa ) && \
