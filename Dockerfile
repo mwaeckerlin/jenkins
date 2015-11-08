@@ -8,10 +8,13 @@ ENV TIMEZONE="Europe/Zurich"
 ENV JENKINS_PREFIX /
 ENV BUILD_PACKAGES \
                     default-jdk \
+                    gnupg \
                     cgroup-lite \
                     lxc-docker \
                     reprepro \
-                    schroot
+                    schroot \
+                    jenkins \
+                    sudo
 ENV ANDROID_HOME /android
 ENV LANG en_US.UTF-8
 EXPOSE 8080
