@@ -42,7 +42,7 @@ ENV BUILD_PACKAGES \
                     libxml-cxx-dev \
                     libz-dev \
                     lsb-release \
-                    cgroup-light \
+                    cgroup-lite \
                     lxc-docker \
                     mingw-w64 \
                     mrw-c++-dev \
@@ -79,7 +79,7 @@ RUN wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add 
 RUN echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
 RUN echo deb https://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list
-RUN wget -O- https://dev.marc.waeckerlin.org/repository/PublicKey | apt-key add -
+RUN bash -c "wget -O- https://dev.marc.waeckerlin.org/repository/PublicKey | apt-key add -"
 RUN apt-add-repository https://dev.marc.waeckerlin.org/repository
 RUN apt-add-repository ppa:cordova-ubuntu/ppa
 RUN apt-get update -y
