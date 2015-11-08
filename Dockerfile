@@ -14,6 +14,7 @@ ENV BUILD_PACKAGES \
                     reprepro \
                     schroot \
                     jenkins \
+                    graphviz \
                     sudo
 ENV ANDROID_HOME /android
 ENV LANG en_US.UTF-8
