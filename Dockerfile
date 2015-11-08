@@ -7,65 +7,11 @@ ENV MAINTAINER_EMAIL ""
 ENV TIMEZONE="Europe/Zurich"
 ENV JENKINS_PREFIX /
 ENV BUILD_PACKAGES \
-                    automake \
-                    autotools-dev \
-                    binutils-dev \
-                    cordova-cli \
-                    curl \
-                    debhelper \
                     default-jdk \
-                    doxygen \
-                    expect \
-                    graphviz \
-                    lib32gcc1 \
-                    lib32ncurses5 \
-                    lib32stdc++6 \
-                    lib32z1 \
-                    libboost-thread-dev \
-                    libc6-i386 \
-                    libconfuse-dev \
-                    libcppunit-dev \
-                    libgnutls-dev \
-                    libiberty-dev \
-                    libmysqlclient-dev \
-                    libp11-kit-dev \
-                    libpcsclite-dev \
-                    libpcscxx-dev \
-                    libpkcs11-helper1-dev \
-                    libproxy-dev \
-                    libqt5svg5-dev \
-                    libqt5webkit5-dev \
-                    libqt5x11extras5-dev \
-                    libqt5xmlpatterns5-dev \
-                    libssl-dev \
-                    libtool \
-                    libxml-cxx-dev \
-                    libz-dev \
-                    lsb-release \
                     cgroup-lite \
                     lxc-docker \
-                    mingw-w64 \
-                    mrw-c++-dev \
-                    mscgen \
-                    openssh-client \
-                    pkg-config \
-                    proxyface-dev \
-                    qt5-default \
-                    qtbase5-dev \
-                    qtbase5-dev-tools \
-                    qttools5-dev \
-                    qttools5-dev-tools \
-                    quilt \
                     reprepro \
-                    schroot \
-                    subversion \
-                    subversion-tools \
-                    sudo \
-                    svn2cl \
-                    xml2 \
-                    xvfb \
-                    zip \
-                    zlib1g-dev
+                    schroot
 ENV ANDROID_HOME /android
 ENV LANG en_US.UTF-8
 EXPOSE 8080
