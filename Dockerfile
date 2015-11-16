@@ -15,6 +15,7 @@ ENV BUILD_PACKAGES \
                     schroot \
                     jenkins \
                     graphviz \
+                    zip \
                     sudo
 ENV ANDROID_HOME /android
 ENV LANG en_US.UTF-8
