@@ -39,7 +39,7 @@ RUN sed -i 's,JENKINS_ARGS="[^"]*,& --prefix=$JENKINS_PREFIX,' /etc/default/jenk
 RUN apt-get install -y ${BUILD_PACKAGES}
 RUN adduser jenkins docker
 
-VOLUME /VOLUME /var/lib/jenkins
+VOLUME /var/lib/jenkins
 VOLUME /var/log/jenkins
 WORKDIR /var/lib/jenkins
 
