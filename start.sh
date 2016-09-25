@@ -26,4 +26,4 @@ apt-get install -y ${BUILD_PACKAGES}
 apt-get install -y -f
 test -f /var/lib/jenkins/.ssh/id_rsa || sudo -EHu jenkins ssh-keygen -b 4096 -N "" -f /var/lib/jenkins/.ssh/id_rsa
 cat /var/lib/jenkins/.ssh/id_rsa.pub
-sudo -EHu jenkins /var/lib/jenkins/jenkins.sh
+sudo -EHu jenkins /jenkins.sh
