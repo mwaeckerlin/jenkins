@@ -1,4 +1,4 @@
-FROM ubuntu:wily
+FROM ubuntu:latest
 MAINTAINER mwaeckerlin
 
 ENV MAINTAINER_NAME ""
@@ -19,12 +19,15 @@ ENV BUILD_PACKAGES \
                     sudo
 ENV ANDROID_HOME /android
 ENV LANG en_US.UTF-8
+ENV TERM xterm
 EXPOSE 8080
 EXPOSE 50000
 
 RUN locale-gen ${LANG}
 RUN update-locale LANG=${LANG}
 RUN apt-get update -y
+RUN apt-get install -y lsb-release
+RUN lsb_release -a
 RUN apt-get install -y wget software-properties-common apt-transport-https
 RUN wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
 RUN echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list
@@ -44,29 +47,7 @@ VOLUME /var/lib/jenkins
 VOLUME /var/log/jenkins
 WORKDIR /var/lib/jenkins
 
+ADD jenkins.sh /var/lib/jenkins/jenkins.sh
+ADD start.sh /start.sh
 USER root
-CMD if test -e "${ANDROID_HOME}"; then chown -R jenkins.jenkins "${ANDROID_HOME}"; fi && \
-    if test -n "${MAINTAINER_NAME}" -a -n "${MAINTAINER_COMMENT}" -a -n "${MAINTAINER_EMAIL}" \
-            -a ! -d ~jenkins/.gnupg ; then \
-      ( echo "Key-Type: RSA"; \
-        echo "Key-Length: 4096"; \
-        echo "Subkey-Type: RSA"; \
-        echo "Subkey-Length: 4096"; \
-        echo "Name-Real: ${MAINTAINER_NAME}"; \
-        echo "Name-Comment: ${MAINTAINER_COMMENT}"; \
-        echo "Name-Email: ${MAINTAINER_EMAIL}"; \
-        echo "Expire-Date: 0"; \
-        echo "%echo generating key for ${MAINTAINER_NAME} ..."; \
-        echo "%commit"; \
-        echo "%echo done."; ) \
-      | sudo -Hu jenkins gpg -v -v --gen-key --batch; \
-    fi; \
-    echo "${TIMEZONE}" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata && \
-    if which cgroups-mount 1>&2 > /dev/null && which docker 1>&2 > /dev/null; then \
-      cgroups-mount && service docker start; \
-    fi; \
-    apt-get install -y ${BUILD_PACKAGES} && \
-    ( test -f /var/lib/jenkins/.ssh/id_rsa || \
-      sudo -EHu jenkins ssh-keygen -b 4096 -N "" -f /var/lib/jenkins/.ssh/id_rsa ) && \
-    cat /var/lib/jenkins/.ssh/id_rsa.pub && \
-    sudo -EHu jenkins bash -c 'export TERMINAL=dumb; export ANDROID_HOME="'"${ANDROID_HOME}"'"; . /etc/default/jenkins && export JENKINS_HOME && ${JAVA} -jar ${JAVA_ARGS} -Dfile.encoding=UTF-8 ${JENKINS_WAR} ${JENKINS_ARGS}'
+CMD /start.sh
