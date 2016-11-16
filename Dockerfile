@@ -7,16 +7,19 @@ ENV MAINTAINER_EMAIL ""
 ENV TIMEZONE="Europe/Zurich"
 ENV JENKINS_PREFIX /
 ENV BUILD_PACKAGES \
+                    cgroup-lite \
                     default-jdk \
                     gnupg \
-                    cgroup-lite \
+                    graphviz \
+                    jenkins \
                     lxc-docker \
+                    qemu-user \
+                    qemu-user-static \
+                    qemu-utils \
                     reprepro \
                     schroot \
-                    jenkins \
-                    graphviz \
-                    zip \
-                    sudo
+                    sudo \
+                    zip                    
 ENV ANDROID_HOME /android
 ENV LANG en_US.UTF-8
 ENV TERM xterm
