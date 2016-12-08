@@ -8,16 +8,18 @@ ENV TIMEZONE="Europe/Zurich"
 ENV JENKINS_PREFIX /
 ENV BUILD_PACKAGES \
                     cgroup-lite \
+                    createrepo \
                     default-jdk \
                     gnupg \
                     graphviz \
                     jenkins \
                     lxc-docker \
                     qemu-user \
-                    qemu-user-static \
                     qemu-utils \
+                    update-binfmts \
                     reprepro \
                     schroot \
+                    subversion \
                     sudo \
                     zip                    
 ENV ANDROID_HOME /android
