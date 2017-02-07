@@ -19,6 +19,7 @@ echo "${TIMEZONE}" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 if which cgroups-mount 1>&2 > /dev/null && which docker 1>&2 > /dev/null; then
     cgroups-mount && service docker start
 fi
+export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get install -y -f
 apt-get upgrade -y

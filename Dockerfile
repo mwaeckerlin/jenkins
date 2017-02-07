@@ -8,6 +8,7 @@ ENV TIMEZONE="Europe/Zurich"
 ENV JENKINS_PREFIX /
 ENV BUILD_PACKAGES \
                     cgroup-lite \
+                    createrepo \
                     default-jdk \
                     gnupg \
                     graphviz \
