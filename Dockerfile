@@ -15,10 +15,11 @@ ENV BUILD_PACKAGES \
                     jenkins \
                     lxc-docker \
                     qemu-user \
-                    qemu-user-static \
                     qemu-utils \
+                    update-binfmts \
                     reprepro \
                     schroot \
+                    subversion \
                     sudo \
                     zip                    
 ENV ANDROID_HOME /android
