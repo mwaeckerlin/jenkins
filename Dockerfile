@@ -16,7 +16,7 @@ ENV BUILD_PACKAGES \
                     lxc-docker \
                     qemu-user \
                     qemu-utils \
-                    update-binfmts \
+                    binfmt-support \
                     reprepro \
                     schroot \
                     subversion \
