@@ -9,6 +9,7 @@ ENV JENKINS_PREFIX /
 ENV BUILD_PACKAGES \
                     cgroup-lite \
                     createrepo \
+                    curl \
                     default-jdk \
                     gnupg \
                     graphviz \
