@@ -11,10 +11,11 @@ ENV BUILD_PACKAGES \
                     createrepo \
                     curl \
                     default-jdk \
+                    docker.io \
                     gnupg \
                     graphviz \
                     jenkins \
-                    lxc-docker \
+                    npm \
                     qemu-user \
                     qemu-utils \
                     binfmt-support \
@@ -29,14 +30,9 @@ EXPOSE 50000
 
 RUN wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
 RUN echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-RUN echo deb https://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list
 RUN apt-add-repository ppa:cordova-ubuntu/ppa
-RUN apt-get update -y
-RUN apt-get upgrade -y
-RUN apt-get install -y jenkins
+RUN apt-get update && apt-get install -y jenkins ${BUILD_PACKAGES}
 RUN sed -i 's,JENKINS_ARGS="[^"]*,& --prefix=$JENKINS_PREFIX,' /etc/default/jenkins
-RUN apt-get install -y ${BUILD_PACKAGES}
 RUN adduser jenkins docker
 
 VOLUME /var/lib/jenkins
