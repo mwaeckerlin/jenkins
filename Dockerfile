@@ -24,6 +24,7 @@ ENV BUILD_PACKAGES \
                     subversion \
                     sudo \
                     zip
+ENV ADDITIONAL_PACKAGES ""
 ENV ANDROID_HOME /android
 EXPOSE 8080
 EXPOSE 50000

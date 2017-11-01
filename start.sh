@@ -15,6 +15,10 @@ if test -n "${MAINTAINER_NAME}" -a -n "${MAINTAINER_COMMENT}" -a -n "${MAINTAINE
       echo "%echo done." ) \
         | sudo -Hu jenkins gpg -v -v --gen-key --batch
 fi
+if test -n "${ADDITIONAL_PACKAGES}"; then
+    apt-get -y update
+    apt-get -y install "${ADDITIONAL_PACKAGES}"
+fi
 if test "${TIMEZONE}" != "$(</etc/timezone)"; then
     echo "${TIMEZONE}" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 fi
