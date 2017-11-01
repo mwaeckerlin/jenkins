@@ -6,6 +6,9 @@ ENV MAINTAINER_COMMENT ""
 ENV MAINTAINER_EMAIL ""
 ENV TIMEZONE="Europe/Zurich"
 ENV JENKINS_PREFIX /
+ENV ADDITIONAL_PACKAGES ""
+ENV ANDROID_HOME /android
+ENV FIX_ACCESS_RIGHTS 0
 ENV BUILD_PACKAGES \
                     cgroup-lite \
                     createrepo \
@@ -24,8 +27,6 @@ ENV BUILD_PACKAGES \
                     subversion \
                     sudo \
                     zip
-ENV ADDITIONAL_PACKAGES ""
-ENV ANDROID_HOME /android
 EXPOSE 8080
 EXPOSE 50000
 
