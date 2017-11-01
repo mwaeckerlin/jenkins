@@ -31,7 +31,7 @@ EXPOSE 50000
 RUN wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
 RUN echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list
 RUN apt-add-repository ppa:cordova-ubuntu/ppa
-RUN apt-get update && apt-get install -y jenkins ${BUILD_PACKAGES}
+RUN apt-get update && apt-get install -y jenkins tzdata ${BUILD_PACKAGES}
 RUN sed -i 's,JENKINS_ARGS="[^"]*,& --prefix=$JENKINS_PREFIX,' /etc/default/jenkins
 RUN adduser jenkins docker
 
