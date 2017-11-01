@@ -15,16 +15,13 @@ if test -n "${MAINTAINER_NAME}" -a -n "${MAINTAINER_COMMENT}" -a -n "${MAINTAINE
       echo "%echo done." ) \
         | sudo -Hu jenkins gpg -v -v --gen-key --batch
 fi
-echo "${TIMEZONE}" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
+if test "${TIMEZONE}" != "$(</etc/timezone)"; then
+    echo "${TIMEZONE}" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
+fi
 if which cgroups-mount 1>&2 > /dev/null && which docker 1>&2 > /dev/null; then
     cgroups-mount && service docker start
 fi
 export DEBIAN_FRONTEND=noninteractive
-apt-get update
-apt-get install -y -f
-apt-get upgrade -y
-apt-get install -y ${BUILD_PACKAGES}
-apt-get install -y -f
 test -f /var/lib/jenkins/.ssh/id_rsa || sudo -EHu jenkins ssh-keygen -b 4096 -N "" -f /var/lib/jenkins/.ssh/id_rsa
 cat /var/lib/jenkins/.ssh/id_rsa.pub
 chown -R jenkins.jenkins /var/lib/jenkins

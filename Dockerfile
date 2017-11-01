@@ -23,7 +23,7 @@ ENV BUILD_PACKAGES \
                     schroot \
                     subversion \
                     sudo \
-                    zip                    
+                    zip
 ENV ANDROID_HOME /android
 EXPOSE 8080
 EXPOSE 50000
