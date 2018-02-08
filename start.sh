@@ -1,5 +1,9 @@
 #!/bin/bash -e
 
+# add user to group that has access to /var/run/docker.sock
+addgroup --gid $(stat -c '%g' /var/run/docker.sock) extdock || true
+usermod -a -G $(stat -c '%g' /var/run/docker.sock) jenkins || true
+
 if test -e "${ANDROID_HOME}"; then chown -R jenkins.jenkins "${ANDROID_HOME}"; fi
 if test -n "${MAINTAINER_NAME}" -a -n "${MAINTAINER_COMMENT}" -a -n "${MAINTAINER_EMAIL}" -a ! -d ~jenkins/.gnupg ; then
     ( echo "Key-Type: RSA"
@@ -19,12 +23,6 @@ echo "${TIMEZONE}" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 if which cgroups-mount 1>&2 > /dev/null && which docker 1>&2 > /dev/null; then
     cgroups-mount && service docker start
 fi
-export DEBIAN_FRONTEND=noninteractive
-apt-get update
-apt-get install -y -f
-apt-get upgrade -y
-apt-get install -y ${BUILD_PACKAGES}
-apt-get install -y -f
 test -f /var/lib/jenkins/.ssh/id_rsa || sudo -EHu jenkins ssh-keygen -b 4096 -N "" -f /var/lib/jenkins/.ssh/id_rsa
 cat /var/lib/jenkins/.ssh/id_rsa.pub
 chown -R jenkins.jenkins /var/lib/jenkins
