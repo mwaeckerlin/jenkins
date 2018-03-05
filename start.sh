@@ -1,9 +1,5 @@
 #!/bin/bash -e
 
-# add user to group that has access to /var/run/docker.sock
-addgroup --gid $(stat -c '%g' /var/run/docker.sock) extdock || true
-usermod -a -G $(stat -c '%g' /var/run/docker.sock) jenkins || true
-
 if test "${FIX_ACCESS_RIGHTS}" != 0; then
     echo "**** Fixing Access Rights:"
     chown -R jenkins.jenkins /var/lib/jenkins
@@ -36,10 +32,7 @@ if test "${TIMEZONE}" != "$(</etc/timezone)"; then
     echo "**** Setting Timezone to ${TIMEZONE}:"
     echo "${TIMEZONE}" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 fi
-if which cgroups-mount 1>&2 > /dev/null && which docker 1>&2 > /dev/null; then
-    echo "**** Enabling Docker in Docker:"
-    cgroups-mount && service docker start
-fi
+/start-dockindock.sh
 test -f /var/lib/jenkins/.ssh/id_rsa || sudo -EHu jenkins ssh-keygen -b 4096 -N "" -f /var/lib/jenkins/.ssh/id_rsa
 echo "**** Jenkins' SSH public key (to give jenkins access to other hosts):"
 cat /var/lib/jenkins/.ssh/id_rsa.pub

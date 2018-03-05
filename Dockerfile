@@ -1,4 +1,4 @@
-FROM mwaeckerlin/ubuntu-base
+FROM mwaeckerlin/dockindock
 MAINTAINER mwaeckerlin
 
 ENV JAVA_ARGS "-Xmx4096m"
@@ -12,11 +12,9 @@ ENV ADDITIONAL_PACKAGES ""
 ENV ANDROID_HOME /android
 ENV FIX_ACCESS_RIGHTS 0
 ENV BUILD_PACKAGES \
-                    cgroup-lite \
                     createrepo \
                     curl \
                     default-jdk \
-                    docker.io \
                     gnupg \
                     graphviz \
                     jenkins \
