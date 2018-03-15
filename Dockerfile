@@ -42,6 +42,4 @@ VOLUME /var/log/jenkins
 WORKDIR /var/lib/jenkins
 
 ADD jenkins.sh /jenkins.sh
-ADD start.sh /start.sh
 USER root
-CMD /start.sh
