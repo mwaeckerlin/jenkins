@@ -1,4 +1,6 @@
-#!/bin/bash -e
+#!/bin/bash -ex
+
+set -x
 
 if test "${FIX_ACCESS_RIGHTS}" != 0; then
     echo "**** Fixing Access Rights:"
@@ -32,7 +34,7 @@ if test "${TIMEZONE}" != "$(</etc/timezone)"; then
     echo "**** Setting Timezone to ${TIMEZONE}:"
     echo "${TIMEZONE}" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 fi
-/start-dockindock.sh
+/start-dockindock.sh && echo "**** Docker is running"
 test -f /var/lib/jenkins/.ssh/id_rsa || sudo -EHu jenkins ssh-keygen -b 4096 -N "" -f /var/lib/jenkins/.ssh/id_rsa
 echo "**** Jenkins' SSH public key (to give jenkins access to other hosts):"
 cat /var/lib/jenkins/.ssh/id_rsa.pub

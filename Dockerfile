@@ -30,6 +30,7 @@ ENV BUILD_PACKAGES \
 EXPOSE 8080
 EXPOSE 50000
 
+ENV CONTAINERNAME="jenkins"
 RUN apt-get update \
  && apt-get install -y wget software-properties-common \
  && wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add - \
@@ -43,5 +44,6 @@ VOLUME /var/lib/jenkins
 VOLUME /var/log/jenkins
 WORKDIR /var/lib/jenkins
 
+ADD start.sh /start.sh
 ADD jenkins.sh /jenkins.sh
 USER root
