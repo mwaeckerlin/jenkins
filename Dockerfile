@@ -19,8 +19,7 @@ ENV BUILD_PACKAGES \
                     graphviz \
                     jenkins \
                     npm \
-                    qemu-user \
-                    qemu-utils \
+                    qemu-user-static \
                     binfmt-support \
                     reprepro \
                     schroot \
