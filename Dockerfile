@@ -34,7 +34,6 @@ RUN apt-get update \
  && apt-get install -y wget software-properties-common \
  && wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add - \
  && echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list \
- && apt-add-repository ppa:cordova-ubuntu/ppa \
  && apt-get update && apt-get install -y jenkins tzdata ${BUILD_PACKAGES} software-properties-common- \
  && sed -i 's,JENKINS_ARGS="[^"]*,& --prefix=$JENKINS_PREFIX,' /etc/default/jenkins \
  && adduser jenkins docker
