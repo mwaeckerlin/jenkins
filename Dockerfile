@@ -14,7 +14,7 @@ ENV FIX_ACCESS_RIGHTS 0
 ENV BUILD_PACKAGES \
                     createrepo \
                     curl \
-                    default-jdk \
+                    openjdk-8-jre-headless \
                     gnupg \
                     graphviz \
                     jenkins \
