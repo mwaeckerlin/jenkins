@@ -12,26 +12,27 @@ ENV ADDITIONAL_PACKAGES ""
 ENV ANDROID_HOME /android
 ENV FIX_ACCESS_RIGHTS 0
 ENV BUILD_PACKAGES \
-                    createrepo \
-                    curl \
-                    openjdk-8-jre-headless \
-                    gnupg \
-                    graphviz \
-                    jenkins \
-                    npm \
-                    qemu-user-static \
-                    binfmt-support \
-                    reprepro \
-                    schroot \
-                    subversion \
-                    sudo \
-                    zip
+        binfmt-support \
+        createrepo \
+        curl \
+        git \
+        gnupg \
+        graphviz \
+        jenkins \
+        npm \
+        openjdk-8-jre-headless \
+        qemu-user-static \
+        reprepro \
+        schroot \
+        subversion \
+        sudo \
+        zip
 EXPOSE 8080
 EXPOSE 50000
 
 ENV CONTAINERNAME="jenkins"
 RUN apt-get update \
- && apt-get install -y wget software-properties-common \
+ && apt-get install --no-install-recommends --no-install-suggests -y wget software-properties-common \
  && wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add - \
  && echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list \
  && apt-get update && apt-get install -y jenkins tzdata ${BUILD_PACKAGES} software-properties-common- \
